@@ -38,16 +38,15 @@ class _HomeState extends State<Home> {
                         margin: EdgeInsets.only(top: 50, bottom: 20),
                         child: Text(
                           'All ToDos',
-                          style:
-                              TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.w500),
                         ),
                       ),
-
-                      for(ToDo todoo in todosList)
+                      for (ToDo todoo in todosList)
                         ToDoItem(
                           todo: todoo,
                           onToDoChanged: _handleToDoChange,
-                          onDeleteItem: () {},
+                          onDeleteItem: _deleteToDoItem,
                         ),
                     ],
                   ),
@@ -66,26 +65,22 @@ class _HomeState extends State<Home> {
                       right: 20,
                       left: 20,
                     ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 5
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: const [
                         BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(0.0, 0.0),
-                        blurRadius: 10.0,
-                        spreadRadius: 0.0
-                      ),],
+                            color: Colors.grey,
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 10.0,
+                            spreadRadius: 0.0),
+                      ],
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: 'Add a new todo item',
                         border: InputBorder.none,
-
                       ),
                     ),
                   ),
@@ -102,9 +97,7 @@ class _HomeState extends State<Home> {
                         fontSize: 40,
                       ),
                     ),
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: tdBlue,
                       minimumSize: Size(60, 60),
@@ -121,10 +114,16 @@ class _HomeState extends State<Home> {
   }
 
   void _handleToDoChange(ToDo todo) {
-  setState(() {
-    todo.isDone = !todo.isDone;
-  });
-}
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
+  }
+
+  void _deleteToDoItem(String id) {
+    setState(() {
+      todosList.removeWhere((item) => item.id == id);
+    });
+  }
 
   AppBar _buildAppBar() {
     return AppBar(

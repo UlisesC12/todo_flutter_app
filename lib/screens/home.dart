@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constants/colors.dart';
 
 import 'package:todo_app/widgets/todo_item.dart';
+import '../model/todo.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  Home({super.key});
+
+  final todosList = ToDo.todoList();
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +31,13 @@ class Home extends StatelessWidget {
                     margin: EdgeInsets.only(top: 50, bottom: 20),
                     child: Text(
                       'All ToDos',
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500
-                      ),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
                     ),
                   ),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
-                  ToDoItem(),
+
+                  for(ToDo todoo in todosList)
+                    ToDoItem(todo: todoo,),
                 ],
               ),
             )
@@ -81,34 +73,26 @@ class Home extends StatelessWidget {
   }
 }
 
-
 Widget searchBox() {
   return Container(
-    padding: EdgeInsets.symmetric(
-      horizontal: 15
-    ),
+    padding: EdgeInsets.symmetric(horizontal: 15),
     decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20)
-    ),
+        color: Colors.white, borderRadius: BorderRadius.circular(20)),
     child: TextField(
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(0),
-        prefixIcon: Icon(
-          Icons.search,
-          color: tdBlack,
-          size: 20,
-        ),
-        prefixIconConstraints: BoxConstraints(
-          maxHeight: 20,
-          minWidth: 25,
-        ),
-        border: InputBorder.none,
-        hintText: 'Search',
-        hintStyle: TextStyle(
-          color: tdGrey
-        )
-      ),
+          contentPadding: EdgeInsets.all(0),
+          prefixIcon: Icon(
+            Icons.search,
+            color: tdBlack,
+            size: 20,
+          ),
+          prefixIconConstraints: BoxConstraints(
+            maxHeight: 20,
+            minWidth: 25,
+          ),
+          border: InputBorder.none,
+          hintText: 'Search',
+          hintStyle: TextStyle(color: tdGrey)),
     ),
   );
 }

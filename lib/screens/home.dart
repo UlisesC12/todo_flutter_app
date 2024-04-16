@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, sort_child_properties_last, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/colors.dart';
@@ -6,9 +6,14 @@ import 'package:todo_app/constants/colors.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 import '../model/todo.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final todosList = ToDo.todoList();
 
   @override
@@ -39,7 +44,11 @@ class Home extends StatelessWidget {
                       ),
 
                       for(ToDo todoo in todosList)
-                        ToDoItem(todo: todoo,),
+                        ToDoItem(
+                          todo: todoo,
+                          onToDoChanged: _handleToDoChange,
+                          onDeleteItem: () {},
+                        ),
                     ],
                   ),
                 )
@@ -110,6 +119,12 @@ class Home extends StatelessWidget {
       ),
     );
   }
+
+  void _handleToDoChange(ToDo todo) {
+  setState(() {
+    todo.isDone = !todo.isDone;
+  });
+}
 
   AppBar _buildAppBar() {
     return AppBar(
